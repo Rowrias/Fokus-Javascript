@@ -6,7 +6,7 @@ const btnAdicionarTarefa = document.querySelector('.app__button--add-task')
 const formAdicionarTarefa = document.querySelector('.app__form-add-task')
 // E aqui, pegamos a área de texto onde o usuário digita a descrição da tarefa.
 const textarea = document.querySelector('.app__form-textarea')
-//
+// Seleciona a ul que mostra a lista de tarefas na pagina
 const ulTarefas = document.querySelector('.app__section-task-list')
 
 // Pega a lista de tarefas do localStorage se não houver cria uma lista vazai.
@@ -63,12 +63,16 @@ formAdicionarTarefa.addEventListener('submit', (evento) => {
     // Depois, adicionamos essa tarefa ao nosso array de tarefas.
     tarefas.push(tarefa)
 
+    // E, finalmente, armazenamos nossa lista de tarefas no localStorage. 
+    // Convertendo o array para uma string em formato JSON para poder armazenar.
+    localStorage.setItem('tarefas', JSON.stringify(tarefas))
+
+
     // Executa a função que mostra na pagina uma lista de tarefas
     const elementoTarefa = criarElementoTarefa(tarefa)
     // Coloca a tarefa no fim da tela
     ulTarefas.append(elementoTarefa)
 
-    // E, finalmente, armazenamos nossa lista de tarefas no localStorage. 
     // Convertendo o array para uma string em formato JSON para poder armazenar.
     localStorage.setItem('tarefas', JSON.stringify(tarefas))
     // Apaga o texto
