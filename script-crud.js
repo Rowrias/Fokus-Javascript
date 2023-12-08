@@ -12,21 +12,6 @@ const ulTarefas = document.querySelector('.app__section-task-list')
 // Pega a lista de tarefas do localStorage se não houver cria uma lista vazai.
 const tarefas = JSON.parse(localStorage.getItem('tarefas')) || []
 
-// E aqui, pegamos a área de texto onde o usuário digita a descrição da tarefa.
-const textarea = document.querySelector('.app__form-textarea')
-
-// Esta é a nossa lista (ou array) de tarefas. Ela começa vazia porque ainda não adicionamos nenhuma tarefa.
-const tarefas = []
-
-// Da mesma forma, esta linha seleciona nosso formulário de adicionar tarefa.
-const formAdicionarTarefa = document.querySelector('.app__form-add-task')
-// E aqui, pegamos a área de texto onde o usuário digita a descrição da tarefa.
-const textarea = document.querySelector('.app__form-textarea')
-//
-const ulTarefas = document.querySelector('.app__section-task-list')
-
-// Pega a lista de tarefas do localStorage se não houver cria uma lista vazai.
-const tarefas = JSON.parse(localStorage.getItem('tarefas')) || []
 
 // função que monta a estrutura html que vai ser mostrado na pagina
 function criarElementoTarefa(tarefa) {
@@ -59,7 +44,6 @@ function criarElementoTarefa(tarefa) {
     return li
 }
 
->>>>>>> 2.0
 // Agora, adicionamos um ouvinte de eventos ao botão. Quando o botão for clicado, esta função será executada.
 btnAdicionarTarefa.addEventListener('click', () => {
     // Esta linha vai alternar a visibilidade do nosso formulário. Lembra da classe 'hidden' que esconde elementos?
@@ -113,4 +97,3 @@ tarefas.forEach(tarefa => {
     const elementoTarefa = criarElementoTarefa(tarefa)
     ulTarefas.append(elementoTarefa)
 });
->>>>>>> 2.0
