@@ -1,3 +1,5 @@
+// encontrar o botão adicionar tarefa
+
 const btnAdicionarTarefa = document.querySelector('.app__button--add-task')
 const formAdicionarTarefa = document.querySelector('.app__form-add-task')
 const textarea = document.querySelector('.app__form-textarea')
@@ -11,21 +13,10 @@ let tarefas = JSON.parse(localStorage.getItem('tarefas')) || []
 let tarefaSelecionada = null
 let liTarefaSelecionada = null
 
-// funçao que converte a lista tarefas de javascript para json para salvar no localStorage
-function atualizarTarefas() {
-    localStorage.setItem('tarefas',JSON.stringify(tarefas))
+function atualizarTarefas () {
+    localStorage.setItem('tarefas', JSON.stringify(tarefas))
 }
 
-// Cria uma função para limpar o conteúdo do textarea e esconder o formulário
-const limparFormulario = () => {
-    textarea.value = ''  // Limpa o conteúdo do textarea
-    formularioTarefa.classList.add('hidden')  // Adiciona a classe 'hidden' ao formulário para escondê-lo
-}
-
-// Associa a função limparFormulario ao evento de clique do botão Cancelar
-btnCancelar.addEventListener('click', limparFormulario);
-
-// função que monta a estrutura html que vai ser mostrado na pagina
 function criarElementoTarefa(tarefa) {
     const li = document.createElement('li')
     li.classList.add('app__section-task-list-item')
@@ -47,6 +38,7 @@ function criarElementoTarefa(tarefa) {
     botao.classList.add('app_button-edit')
 
     botao.onclick = () => {
+        // debugger
         const novaDescricao = prompt("Qual é o novo nome da tarefa?")
         // console.log('Nova descrição da tarefa: ', novaDescricao)
         if (novaDescricao) {            
@@ -87,6 +79,7 @@ function criarElementoTarefa(tarefa) {
         }
     }
 
+
     return li
 }   
 
@@ -96,17 +89,12 @@ btnAdicionarTarefa.addEventListener('click', () => {
 
 formAdicionarTarefa.addEventListener('submit', (evento) => {
     evento.preventDefault();
-
-    // Aqui, criamos um objeto tarefa com a descrição vinda da nossa textarea.
     const tarefa = {
         descricao: textarea.value
     }
     tarefas.push(tarefa)
-
-    // Executa a função que mostra na pagina uma lista de tarefas
     const elementoTarefa = criarElementoTarefa(tarefa)
     ulTarefas.append(elementoTarefa)
-
     atualizarTarefas()
     textarea.value = ''
     formAdicionarTarefa.classList.add('hidden')
