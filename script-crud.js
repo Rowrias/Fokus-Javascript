@@ -4,19 +4,36 @@
 const btnAdicionarTarefa = document.querySelector('.app__button--add-task')
 // Da mesma forma, esta linha seleciona nosso formulário de adicionar tarefa.
 const formAdicionarTarefa = document.querySelector('.app__form-add-task')
+// Selecione o botão de Cancelar que adicionamos ao formulário
+const btnCancelar = document.querySelector('.app__form-footer__button--cancel')
 // E aqui, pegamos a área de texto onde o usuário digita a descrição da tarefa.
 const textarea = document.querySelector('.app__form-textarea')
-//
+// Seleciona a seção UL 
 const ulTarefas = document.querySelector('.app__section-task-list')
 
 // Pega a lista de tarefas do localStorage se não houver cria uma lista vazai.
 const tarefas = JSON.parse(localStorage.getItem('tarefas')) || []
+
+// funçao que converte a lista tarefas de javascript para json para salvar no localStorage
+function atualizarTarefas() {
+    localStorage.setItem('tarefas',JSON.stringify(tarefas))
+}
+
+// Cria uma função para limpar o conteúdo do textarea e esconder o formulário
+const limparFormulario = () => {
+    textarea.value = ''  // Limpa o conteúdo do textarea
+    formularioTarefa.classList.add('hidden')  // Adiciona a classe 'hidden' ao formulário para escondê-lo
+}
+
+// Associa a função limparFormulario ao evento de clique do botão Cancelar
+btnCancelar.addEventListener('click', limparFormulario);
 
 // função que monta a estrutura html que vai ser mostrado na pagina
 function criarElementoTarefa(tarefa) {
     const li = document.createElement('li')
     li.classList.add('app__section-task-list-item')
 
+    // svg
     const svg = document.createElement('svg')
     svg.innerHTML = `
         <svg class="app__section-task-icon-status" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -26,12 +43,25 @@ function criarElementoTarefa(tarefa) {
         fill="#01080E"></path>
         </svg>
     `
+    // paragrafo
     const paragrafo = document.createElement('p')
     paragrafo.classList.add('app__section-task-list-item-description')
     paragrafo.textContent = tarefa.descricao
 
+    // editar
     const botao = document.createElement('button')
     botao.classList.add('app_button-edit')
+    botao.onclick = () => {
+        const novaDescricao = prompt("Qual é o novo nome da tarefa?")
+        // se houver qlqr coisa escrita é "true", null ou vazia retorna "falso"
+        if (novaDescricao) {
+            // atualiza o objeto visualmente
+            paragrafo.textContent = novaDescricao
+            // atualiza o objeto localStorage
+            tarefa.descricao = novaDescricao
+            atualizarTarefas()
+        }
+    }
     const imagemBotao = document.createElement('img')
     imagemBotao.setAttribute('src', '/imagens/edit.png')
     botao.append(imagemBotao)
@@ -67,10 +97,8 @@ formAdicionarTarefa.addEventListener('submit', (evento) => {
     const elementoTarefa = criarElementoTarefa(tarefa)
     // Coloca a tarefa no fim da tela
     ulTarefas.append(elementoTarefa)
-
-    // E, finalmente, armazenamos nossa lista de tarefas no localStorage. 
     // Convertendo o array para uma string em formato JSON para poder armazenar.
-    localStorage.setItem('tarefas', JSON.stringify(tarefas))
+    atualizarTarefas()
     // Apaga o texto
     textarea.value = ''
     // Esconde o formulario
