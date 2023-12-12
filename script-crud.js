@@ -1,7 +1,6 @@
 const btnAdicionarTarefa = document.querySelector('.app__button--add-task')
 const formAdicionarTarefa = document.querySelector('.app__form-add-task')
 const textarea = document.querySelector('.app__form-textarea')
-// Seleciona a seção UL 
 const ulTarefas = document.querySelector('.app__section-task-list')
 const paragrafoDescricaoTarefa = document.querySelector('.app__section-active-task-description')
 
@@ -48,7 +47,6 @@ function criarElementoTarefa(tarefa) {
     botao.classList.add('app_button-edit')
 
     botao.onclick = () => {
-        // debugger
         const novaDescricao = prompt("Qual é o novo nome da tarefa?")
         // console.log('Nova descrição da tarefa: ', novaDescricao)
         if (novaDescricao) {            
@@ -89,7 +87,6 @@ function criarElementoTarefa(tarefa) {
         }
     }
 
-
     return li
 }   
 
@@ -110,8 +107,6 @@ formAdicionarTarefa.addEventListener('submit', (evento) => {
     const elementoTarefa = criarElementoTarefa(tarefa)
     ulTarefas.append(elementoTarefa)
 
-    // E, finalmente, armazenamos nossa lista de tarefas no localStorage. 
-    // Convertendo o array para uma string em formato JSON para poder armazenar.
     atualizarTarefas()
     textarea.value = ''
     formAdicionarTarefa.classList.add('hidden')
